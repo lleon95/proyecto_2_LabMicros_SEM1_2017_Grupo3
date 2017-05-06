@@ -1,0 +1,3 @@
+https://www.smashingrobotics.com/how-to-install-debian-intel-galileo-gen-2/
+
+Usado: https://sourceforge.net/p/galileodebian/wiki/DebianOnGalileo/
