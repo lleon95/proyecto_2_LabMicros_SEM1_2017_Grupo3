@@ -1,10 +1,11 @@
 # Importar librerias
 import serial
 import pyautogui
-#import time
 
 # Preparar el puerto serial
-USB = serial.Serial('/dev/tnt0',9600)
+SP = input("Puerto serial: ")
+BR = input("Baudrate: ")
+USB = serial.Serial(SP,BR)
 
 # Variables globales
 R_button = 0
