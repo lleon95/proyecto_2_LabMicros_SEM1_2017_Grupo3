@@ -103,7 +103,7 @@ def analisis():
       if (elapsed_time>1.5):
         LB = 0
         RB = 1
-      else:
+      #else: Supongo que esta vacio
     else:
       start_time = time.time()
     
