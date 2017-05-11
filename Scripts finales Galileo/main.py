@@ -5,8 +5,8 @@ from scipy.signal import wiener
 import time
 
 # Configurar el puerto serial
-BT = serial.Serial('/dev/tnt0', 9600)
-USB = serial.Serial('/dev/ttyS1', 9600)
+USB = serial.Serial('/dev/tnt0', 9600)
+BT = serial.Serial('/dev/ttyACM1', 9600)
 
 # Constantes
 nData = 100                         # Cantidad de datos para muestreo  <----- SE PUEDE MODIFICAR
@@ -20,43 +20,19 @@ x = 0
 y = 0
 LB = 0
 RB = 0
+startCounter = 0
 
 
-# Maquina de estados - Rutina principal
-start_time = time.time()
-ctr = 0                               # Este es el contador de los datos insertados   
-while True:
-  #----------------------------------------------------------------------------------------
-  # Estado de WAIT
-  msg = BT.readline()               # El readline() espera hasta que llegue un dato
-  #----------------------------------------------------------------------------------------
-  # Estado de APPEND
-  append(msg)                         # Invocar la subrutina append
-  ctr = ctr + 1                       # Incrementar los valores insertados
-  if(ctr == 100):   
-  #----------------------------------------------------------------------------------------
-  # Estado de FILTER
-    filtro()                          # En caso de llegar a los 100 elementos
-  #----------------------------------------------------------------------------------------
-  # Estado de ANALISIS
-    analisis()
-  #----------------------------------------------------------------------------------------
-  # Estado de CLEAR
-    ctr = 0
-    Xarreglo = []
-    Yarreglo = []
-    Zarreglo = []
-    Farreglo = []
-  
-  
 # Funciones
 
-def append(msg):
-  msg.split(",")
+def agregar(msg):
+  msg = msg.split(",")
+  print msg
   Xarreglo.append(float(msg[0]))
   Yarreglo.append(float(msg[1]))
   Zarreglo.append(float(msg[2]))
-  Farreglo.append(float(msg[3]))
+  #Farreglo.append(float(msg[3]))
+  Farreglo.append(0);
 
 def filtro():
   
@@ -69,6 +45,19 @@ def filtro():
   Yarreglo = wiener(Yarreglo,11)
   Zarreglo = wiener(Zarreglo,11)
   Farreglo = wiener(Farreglo,11)
+
+# Funcion para enviar desplazamiento en relativo (Ej: 1px)
+def sendtoPC(x,y,LB,RB):
+  # Documentacion: 
+    # Si x > 0: derecha
+    # Si x < 0: izquierda
+    # Si y > 0: abajo
+    # Si y < 0: arriba
+    # LB: Left Button: 0: soltar, 1: presionar
+    # RB: Right Button: 0: soltar, 1: presionar
+  # Para enviar al PC
+  USB.write(str(x)+','+str(y)+','+str(LB)+','+str(RB)+','+',\n')
+            
   
 def analisis():
   for j in range(0,99):
@@ -109,20 +98,38 @@ def analisis():
     
     sendtoPC(x,y,LB,RB)
 
-# Funcion para enviar desplazamiento en relativo (Ej: 1px)
-def sendtoPC(x,y,LB,RB):
-  # Documentacion: 
-    # Si x > 0: derecha
-    # Si x < 0: izquierda
-    # Si y > 0: abajo
-    # Si y < 0: arriba
-    # LB: Left Button: 0: soltar, 1: presionar
-    # RB: Right Button: 0: soltar, 1: presionar
-  # Para enviar al PC
-  USB.write(str(x)+','+str(y)+','+str(LB)+','+str(RB)+','+',\n')
-            
+# Maquina de estados - Rutina principal
+start_time = time.time()
+ctr = 0                              # Este es el contador de los datos insertados   
+BT.readline()
+BT.readline()
+while True:
+  #----------------------------------------------------------------------------------------
+  # Estado de WAIT
+  msg = BT.readline()               # El readline() espera hasta que llegue un dato
+  #----------------------------------------------------------------------------------------
+  # Estado de APPEND
+  agregar(msg)                         # Invocar la subrutina append
+  ctr = ctr + 1                       # Incrementar los valores insertados
+  if(ctr == 100):   
+  #----------------------------------------------------------------------------------------
+  # Estado de FILTER
+    filtro()                          # En caso de llegar a los 100 elementos
+  #----------------------------------------------------------------------------------------
+  # Estado de ANALISIS
+    analisis()
+  #----------------------------------------------------------------------------------------
+  # Estado de CLEAR
+    ctr = 0
+    Xarreglo = []
+    Yarreglo = []
+    Zarreglo = []
+    Farreglo = []
   
   
+
+
+
   
   
 

@@ -52,6 +52,7 @@ void setup()
   //  1. Default init. This will set the accelerometer up
   //     with a full-scale range of +/-2g, and an output data rate
   //     of 800 Hz (fastest).
+  Serial.println("O");
   accel.init();
   //  2. Initialize with FULL-SCALE setting. You can set the scale
   //     using either SCALE_2G, SCALE_4G, or SCALE_8G as the value.
@@ -112,11 +113,12 @@ void loop()
 void printAccels()
 {
   Serial.print(accel.x, 3);
-  Serial.print("\t");
+  Serial.print(",");
   Serial.print(accel.y, 3);
-  Serial.print("\t");
+  Serial.print(",");
   Serial.print(accel.z, 3);
-  Serial.print("\t");
+  Serial.print(",");
+  
 }
 
 // This function demonstrates how to use the accel.cx, accel.cy,
