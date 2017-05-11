@@ -99,7 +99,7 @@ def analisis():
     RB = 0
     
     elapsed_time = time.time() - start_time
-    if ((x=0)and(y=0)and(flex=1)):
+    if (x==0 and y==0 and flex==1):
       if (elapsed_time>1.5):
         LB = 0
         RB = 1
