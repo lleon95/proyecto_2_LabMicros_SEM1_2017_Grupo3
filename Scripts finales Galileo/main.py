@@ -70,7 +70,7 @@ def filtro():
   Zarreglo = wiener(Zarreglo,11)
   Farreglo = wiener(Farreglo,11)
   
-def analisis()
+def analisis():
   for j in range(0,99):
     if ((Xarreglo[j]<0.4)and(Xarreglo[j]>-0.4)):
       x = 0
