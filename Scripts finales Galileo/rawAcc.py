@@ -29,8 +29,8 @@ while True:
         # Aqui puede retornar error
         if float(msg[0]) > -10 and float(msg[0]) < 10 and float(msg[1]) > -10 and float(msg[1]):
             # Valor del acelerometro
-            x_acc = msg[0]
-            y_acc = msg[1]
+            x_acc = float(msg[0])
+            y_acc = float(msg[1])
             # Valor final - x
             if x_acc > 0.5:
                 x = 1
