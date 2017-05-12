@@ -1,7 +1,6 @@
-# Importar la libreria 
+# Importar la libreria
 import serial
-from scipy.signal import medfilt
-from scipy.signal import wiener
+import numpy as np
 import time
 
 # Configurar el puerto serial
@@ -21,7 +20,6 @@ Yarreglo = []
 Zarreglo = []
 Farreglo = []
 
-empty = []
 # x = 0
 # y = 0
 # LB = 0
@@ -56,7 +54,7 @@ def filtro():
   F_filtered_arreglo = medfilt(F_raw_arreglo,11)
 
   # Anotacion importante - Wiener no puede contener 0's
-  
+
   # Deben declararse globales
 
 
@@ -72,7 +70,7 @@ def filtro():
 
 # Funcion para enviar desplazamiento en relativo (Ej: 1px)
 def sendtoPC(x_out,y_out,LB_out,RB_out):
-  # Documentacion: 
+  # Documentacion:
     # Si x > 0: derecha
     # Si x < 0: izquierda
     # Si y > 0: abajo
@@ -81,8 +79,8 @@ def sendtoPC(x_out,y_out,LB_out,RB_out):
     # RB: Right Button: 0: soltar, 1: presionar
   # Para enviar al PC
   USB.write(str(x_out)+','+str(y_out)+','+str(LB_out)+','+str(RB_out)+','+',\n')
-  return         
-  
+  return
+
 def analisis():
 
   global Xarreglo, Yarreglo, Farreglo
@@ -93,7 +91,7 @@ def analisis():
   print Xarreglo
   for j in range(0,len(Xarreglo)):
     print j
-    
+
     if ((Xarreglo[j]<0.49)and(Xarreglo[j]>-0.49)):
       x = 0
     elif (Xarreglo[j]>0.51):
@@ -102,7 +100,7 @@ def analisis():
     elif (Xarreglo[j]<-0.51):
       #x = -1
       x = -1
-    
+
     if ((Yarreglo[j]<0.49)and(Yarreglo[j]>-0.49)):
       y = 0
     elif (Yarreglo[j]>0.51):
@@ -111,12 +109,12 @@ def analisis():
     elif (Yarreglo[j]<-0.51):
       #y = -1
       y = -1
-          
+
     if (Farreglo[j]<3.2):
       flex = 0
     elif (Farreglo[j]>3.4):
       flex = 1
-        
+
 
     #dx = abs(Xarreglo[j]-0.5)
     #dy = abs(Yarreglo[j]-0.5)
@@ -128,7 +126,7 @@ def analisis():
     RB = 0
     time.sleep(0.01)
     sendtoPC(x,y,LB,RB)
-    
+
     # elapsed_time = time.time() - start_time
     # if (x==0 and y==0 and flex==1):
     #   if (elapsed_time>1.5):
@@ -137,7 +135,7 @@ def analisis():
     #   #else: Supongo que esta vacio
     # else:
     #   start_time = time.time()
-  
+
   return
 
 def clear_list():
@@ -151,7 +149,7 @@ def clear_list():
 
 # Maquina de estados - Rutina principal
 start_time = time.time()
-ctr = 0                              # Este es el contador de los datos insertados   
+ctr = 0                              # Este es el contador de los datos insertados
 BT.readline()
 BT.readline()
 while True:
@@ -165,7 +163,7 @@ while True:
   print msg
   ctr = ctr + 1                       # Incrementar los valores insertados
 
-  if(ctr == nData):   
+  if(ctr == nData):
   #----------------------------------------------------------------------------------------
   # Estado de FILTER
     filtro()                          # En caso de llegar a los 100 elementos
@@ -176,12 +174,3 @@ while True:
   # Estado de CLEAR
     ctr = 0
     clear_list()
-  
-  
-
-
-
-  
-  
-
-

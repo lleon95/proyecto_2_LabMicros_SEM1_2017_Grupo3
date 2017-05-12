@@ -1,0 +1,8 @@
+https://support.microsoft.com/en-us/help/152969/visual-basic-procedure-to-get-set-cursor-position
+https://docs.microsoft.com/es-es/dotnet/articles/visual-basic/developing-apps/programming/computer-resources/how-to-show-available-serial-ports
+https://msdn.microsoft.com/en-us/library/system.io.ports.serialport(v=vs.110).aspx
+https://www.dotnetperls.com/list-vbnet
+https://social.msdn.microsoft.com/Forums/vstudio/en-US/0a9496f1-7343-408c-8a39-66c3dc44e292/how-to-minimize-vb-app-to-system-tray-while-waiting-on-calls?forum=vbgeneral
+https://www.dotnetperls.com/list-vbnet
+https://msdn.microsoft.com/en-us/library/b873y76a(v=vs.110).aspx
+http://www.elguille.info/NET/API/GetCursorPos.aspx

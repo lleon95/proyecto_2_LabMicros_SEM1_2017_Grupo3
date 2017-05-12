@@ -91,7 +91,7 @@ void loop()
     // The library also supports the portrait/landscape detection
     //  of the MMA8452Q. Check out this function declaration for
     //  an example of how to use that.
-    delay(100);
+    delay(200);
   }
 }
 
