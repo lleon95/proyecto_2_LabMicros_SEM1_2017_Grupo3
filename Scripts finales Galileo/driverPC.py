@@ -3,19 +3,22 @@ import serial
 import pyautogui
 
 # Preparar el puerto serial
-SP = input("Puerto serial: ")
-BR = input("Baudrate: ")
-USB = serial.Serial(SP,BR)
+#SP = input("Puerto serial: ")
+#BR = input("Baudrate: ")
+#USB = serial.Serial(SP,BR)
+USB = serial.Serial('/dev/tnt0',115200)
 
 # Variables globales
 R_button = 0
 L_button = 0
 
 # Rutina principal
+msg = USB.readline()
+msg = USB.readline()
 while True:
   # Leer el puerto serial
   msg = USB.readline()
-  print msg
+  #print msg
   # Desempaquetar datos
   msg = msg.split(',')
   x = float(msg[0])
@@ -43,11 +46,10 @@ while True:
     pyautogui.mouseUp()
     L_button = LB
   
-  
+ 
 #pyautogui.mouseDown(); pyautogui.mouseUp()  # does the same thing as a left-button mouse click
 #pyautogui.mouseDown(button='right')  # press the right button down
 #pyautogui.mouseUp(button='right', x=100, y=200)  # move the mouse to 100, 200, then release the right button up.
-
 
 # Formato del lado de Galileo:
 # USB.write(str(x)+','+str(y)+','+str(LB)+','+str(RB)+','+'\n')
