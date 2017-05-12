@@ -46,3 +46,5 @@ while True:
                 y = 0
             # Enviar los datos al serial
             PC.write(str(x) + ',' + str(y) + ',' + '0' + ',' + '0' + ',' +'\n')
+    except:
+        print "Dato invalido recibido"
