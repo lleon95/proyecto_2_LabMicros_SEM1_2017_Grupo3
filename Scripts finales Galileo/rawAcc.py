@@ -22,6 +22,7 @@ while True:
     # Recibir el dato
     msg = BT.readline()
     # Desempaquetar el mensaje
+    print msg
     msg = msg.split(',')
     # Hacer un try para evitar errores de ejecucion
     try:
