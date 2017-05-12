@@ -33,16 +33,20 @@ while True:
             y_acc = float(msg[1])
             # Valor final - x
             if x_acc > 0.5:
-                x = 3
+                x_acc = (x_acc - 0.5)/0.5   # Cantidad de desplazamiento
+                x = x_acc * 10              # Maximo de desplazamiento
             elif x_acc < -0.5:
-                x = -3
+                x_acc = (x_acc + 0.5)/0.5   # Cantidad de desplazamiento
+                x = x_acc * 10              # Maximo de desplazamiento
             else:
                 x = 0
             # Valor final - y
             if y_acc > 0.5:
-                y = 3
+                y_acc = (y_acc - 0.5)/0.5   # Cantidad de desplazamiento
+                y = y_acc * 10              # Maximo de desplazamiento
             elif y_acc < -0.5:
-                y = -3
+                y_acc = (y_acc + 0.5)/0.5   # Cantidad de desplazamiento
+                y = y_acc * 10              # Maximo de desplazamiento
             else:
                 y = 0
             # Enviar los datos al serial
