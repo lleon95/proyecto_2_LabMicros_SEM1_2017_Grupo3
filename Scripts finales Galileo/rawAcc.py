@@ -26,7 +26,7 @@ while True:
     # Hacer un try para evitar errores de ejecucion
     try:
         # Aqui puede retornar error
-        if float(msg[0]) > -10 and float(msg[0]) < 10 and msg[1]) > -10 and float(msg[1]):
+        if float(msg[0]) > -10 and float(msg[0]) < 10 and float(msg[1]) > -10 and float(msg[1]):
             # Valor del acelerometro
             x_acc = msg[0]
             y_acc = msg[1]
