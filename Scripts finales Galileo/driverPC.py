@@ -15,6 +15,7 @@ L_button = 0
 while True:
   # Leer el puerto serial
   msg = USB.readline()
+  print msg
   # Desempaquetar datos
   msg = msg.split(',')
   x = float(msg[0])

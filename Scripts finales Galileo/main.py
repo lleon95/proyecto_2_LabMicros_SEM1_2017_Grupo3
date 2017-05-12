@@ -5,13 +5,17 @@ from scipy.signal import wiener
 import time
 
 # Configurar el puerto serial
-USB = serial.Serial('/dev/tnt0', 9600)
-BT = serial.Serial('/dev/ttyACM1', 9600)
+USB = serial.Serial('/dev/tnt4', 9600)
+BT = serial.Serial('/dev/ttyACM0', 9600)
 
 # Constantes
-nData = 100                         # Cantidad de datos para muestreo  <----- SE PUEDE MODIFICAR
+nData = 5                         # Cantidad de datos para muestreo  <----- SE PUEDE MODIFICAR
 
 # Variables globales
+X_raw_arreglo = []
+Y_raw_arreglo = []
+Z_raw_arreglo = []
+F_raw_arreglo = []
 Xarreglo = []
 Yarreglo = []
 Zarreglo = []
@@ -27,24 +31,43 @@ startCounter = 0
 
 def agregar(msg):
   msg = msg.split(",")
-  print msg
-  Xarreglo.append(float(msg[0]))
-  Yarreglo.append(float(msg[1]))
-  Zarreglo.append(float(msg[2]))
-  #Farreglo.append(float(msg[3]))
-  Farreglo.append(0);
+  #print msg
+  try:
+    if float(msg[0]) < 10 and float(msg[1]) < 10 and float(msg[2]) < 10:
+      X_raw_arreglo.append(float(msg[0]))
+      Y_raw_arreglo.append(float(msg[1]))
+      Z_raw_arreglo.append(float(msg[2]))
+      #Farreglo.append(float(msg[3]))
+      F_raw_arreglo.append(0);
+  except:
+    print "Dato invalido recibido"
+
+  
 
 def filtro():
   
-  Xarreglo = medfilt(Xarreglo,21)
-  Yarreglo = medfilt(Yarreglo,21)
-  Zarreglo = medfilt(Zarreglo,21)
-  Farreglo = medfilt(Farreglo,21)
+  X_filtered_arreglo = medfilt(X_raw_arreglo,11)
+  Y_filtered_arreglo = medfilt(Y_raw_arreglo,11)
+  Z_filtered_arreglo = medfilt(Z_raw_arreglo,11)
+  F_filtered_arreglo = medfilt(F_raw_arreglo,11)
+
+  # Anotacion importante - Wiener no puede contener 0's
   
-  Xarreglo = wiener(Xarreglo,11)
-  Yarreglo = wiener(Yarreglo,11)
-  Zarreglo = wiener(Zarreglo,11)
-  Farreglo = wiener(Farreglo,11)
+  # Deben declararse globales
+  global Xarreglo
+  global Yarreglo
+  global Zarreglo
+  global Farreglo
+
+  # Xarreglo = wiener(X_filtered_arreglo,11)
+  # Yarreglo = wiener(Y_filtered_arreglo,11)
+  # Zarreglo = wiener(Z_filtered_arreglo,11)
+  Xarreglo = X_filtered_arreglo
+  Yarreglo = Y_filtered_arreglo
+  Zarreglo = Z_filtered_arreglo
+  #Farreglo = wiener(F_filtered_arreglo,11)
+  Farreglo = F_filtered_arreglo
+
 
 # Funcion para enviar desplazamiento en relativo (Ej: 1px)
 def sendtoPC(x,y,LB,RB):
@@ -57,10 +80,20 @@ def sendtoPC(x,y,LB,RB):
     # RB: Right Button: 0: soltar, 1: presionar
   # Para enviar al PC
   USB.write(str(x)+','+str(y)+','+str(LB)+','+str(RB)+','+',\n')
-            
+  return         
   
 def analisis():
-  for j in range(0,99):
+  global x
+  global y
+  global LB
+  global RB
+  start_time = 0
+
+  for j in range(0,len(Xarreglo)):
+    #print j
+    x = 0
+    y = 0
+    flex = 0
     if ((Xarreglo[j]<0.4)and(Xarreglo[j]>-0.4)):
       x = 0
     elif (Xarreglo[j]>0.6):
@@ -80,10 +113,13 @@ def analisis():
     elif (Farreglo[j]>3.4):
       flex = 1
         
-    dx = abs(Xarreglo[j]-0.5)
-    dy = abs(Yarreglo[j]-0.5)
-    x = int(round(x*dx*6.6))
-    y = int(round(y*dy*6.6))
+
+    #dx = abs(Xarreglo[j]-0.5)
+    #dy = abs(Yarreglo[j]-0.5)
+    #x = int(round(x*dx*6.6))
+    #y = int(round(y*dy*6.6))
+    x = x*5
+    y = y*5
     LB = flex
     RB = 0
     
@@ -96,8 +132,8 @@ def analisis():
     else:
       start_time = time.time()
     
-    sendtoPC(x,y,LB,RB)
-
+  sendtoPC(x,y,LB,RB)
+  return
 # Maquina de estados - Rutina principal
 start_time = time.time()
 ctr = 0                              # Este es el contador de los datos insertados   
@@ -107,11 +143,14 @@ while True:
   #----------------------------------------------------------------------------------------
   # Estado de WAIT
   msg = BT.readline()               # El readline() espera hasta que llegue un dato
+  BT.write('1\n')
   #----------------------------------------------------------------------------------------
   # Estado de APPEND
   agregar(msg)                         # Invocar la subrutina append
+  print msg
   ctr = ctr + 1                       # Incrementar los valores insertados
-  if(ctr == 100):   
+
+  if(ctr == nData):   
   #----------------------------------------------------------------------------------------
   # Estado de FILTER
     filtro()                          # En caso de llegar a los 100 elementos
