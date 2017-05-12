@@ -33,16 +33,16 @@ while True:
             y_acc = float(msg[1])
             # Valor final - x
             if x_acc > 0.5:
-                x = 1
+                x = 3
             elif x_acc < -0.5:
-                x = -1
+                x = -3
             else:
                 x = 0
             # Valor final - y
             if y_acc > 0.5:
-                y = 1
+                y = 3
             elif y_acc < -0.5:
-                y = -1
+                y = -3
             else:
                 y = 0
             # Enviar los datos al serial

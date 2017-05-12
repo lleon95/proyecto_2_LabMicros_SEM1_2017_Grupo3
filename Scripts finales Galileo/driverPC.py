@@ -6,7 +6,7 @@ import pyautogui
 #SP = input("Puerto serial: ")
 #BR = input("Baudrate: ")
 #USB = serial.Serial(SP,BR)
-USB = serial.Serial('/dev/tnt0',115200)
+USB = serial.Serial('/dev/ttyACM2',9600)
 
 # Variables globales
 R_button = 0
@@ -45,8 +45,8 @@ while True:
   elif(L_button == 1 and LB == 0):
     pyautogui.mouseUp()
     L_button = LB
-  
- 
+
+
 #pyautogui.mouseDown(); pyautogui.mouseUp()  # does the same thing as a left-button mouse click
 #pyautogui.mouseDown(button='right')  # press the right button down
 #pyautogui.mouseUp(button='right', x=100, y=200)  # move the mouse to 100, 200, then release the right button up.
