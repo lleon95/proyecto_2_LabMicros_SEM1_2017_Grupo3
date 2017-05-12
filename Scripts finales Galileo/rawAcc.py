@@ -35,14 +35,14 @@ while True:
                 x = 1
             elif x_acc < -0.5:
                 x = -1
-            else
+            else:
                 x = 0
             # Valor final - y
             if y_acc > 0.5:
                 y = 1
             elif y_acc < -0.5:
                 y = -1
-            else
+            else:
                 y = 0
             # Enviar los datos al serial
             PC.write(str(x) + ',' + str(y) + ',' + '0' + ',' + '0' + ',' +'\n')
