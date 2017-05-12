@@ -11,6 +11,8 @@ USB = serial.Serial('/dev/ttyACM2',9600)
 # Variables globales
 R_button = 0
 L_button = 0
+x_pos = 300
+y_pos = 300
 
 # Rutina principal
 msg = USB.readline()
@@ -25,8 +27,14 @@ while True:
   y = float(msg[1])
   LB = float(msg[2])
   RB = float(msg[3])
+  # Arreglando a pantalla
+  x = (x/10)*100
+  y = (y/10)*100
+  x_pos = x_pos + x
+  y_pos = y_pos + y
   # Desplazamiento
-  pyautogui.moveRel(x,y)
+  if x != 0 or y != 0:
+      pyautogui.moveTo(x_pos,y_pos)
   # Clicks
   #	Click Derecho
   	# Si se presiona el boton derecho
@@ -53,3 +61,4 @@ while True:
 
 # Formato del lado de Galileo:
 # USB.write(str(x)+','+str(y)+','+str(LB)+','+str(RB)+','+'\n')
+#pyautogui.moveTo(100, 100, 2, pyautogui.easeInQuad)     # start slow, end fast
