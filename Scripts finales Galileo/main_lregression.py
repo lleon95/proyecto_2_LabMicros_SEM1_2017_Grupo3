@@ -77,10 +77,7 @@ def analisis():
     x = 0
     y = 0
     flex = 0
-    print Xarreglo
-
     for j in range(0,len(Xarreglo)):
-        print j
         # Analisis para X
         if (Xarreglo[j]>minThreshold):
             dx = (Xarreglo[j] - minThreshold)/maxThreshold
@@ -101,8 +98,8 @@ def analisis():
             y += 0
 
     # Corregir X y Y
-    x = x / len(Xarreglo)
-    y = y / len(Xarreglo)
+    x = round(x*10 / len(Xarreglo))
+    y = round(y*10 / len(Xarreglo))
     # Enviar para corroborar
     sendtoPC(x,y,0,0)
 
@@ -130,7 +127,7 @@ while True:
     #----------------------------------------------------------------------------------------
     # Estado de APPEND
     agregar(msg)                         # Invocar la subrutina append
-    print msg
+    #print msg
     ctr = ctr + 1                       # Incrementar los valores insertados
 
     if(ctr == nData):
