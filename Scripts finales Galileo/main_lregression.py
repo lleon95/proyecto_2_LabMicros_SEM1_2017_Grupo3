@@ -81,19 +81,19 @@ def analisis():
         # Analisis para X
         if (Xarreglo[j]>minThreshold):
             dx = (Xarreglo[j] - minThreshold)/maxThreshold
-            x += dx*10
+            x += dx
         elif (Xarreglo[j]<-minThreshold):
             dx = (Xarreglo[j] + minThreshold)/maxThreshold
-            x += dx*10
+            x += dx
         else:
             x += 0
         # Analisis para y
         if (Yarreglo[j]>minThreshold):
             dy = (Yarreglo[j] - minThreshold)/maxThreshold
-            y += dy*10
+            y += dy
         elif (Yarreglo[j]<-minThreshold):
             dy = (Yarreglo[j] + minThreshold)/maxThreshold
-            y += dy*10
+            y += dy
         else:
             y += 0
 
