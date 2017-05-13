@@ -4,11 +4,12 @@ import numpy as np
 import time
 
 # Configurar el puerto serial
-USB = serial.Serial('/dev/ttyGS0', 38400)
-BT = serial.Serial('/dev/ttyS0', 38400)
+USB = serial.Serial('/dev/ttyGS0', 9600)
+BT = serial.Serial('/dev/ttyS0', 19200)
 
 # Constantes
-nData = 10                         # Cantidad de datos para muestreo  <----- SE PUEDE MODIFICAR
+nData = 8                         # Cantidad de datos para muestreo  
+
 
 # Variables globales
 X_raw_arreglo = []
@@ -98,8 +99,8 @@ def analisis():
             y += 0
 
     # Corregir X y Y
-    x = round(x*10 / len(Xarreglo))
-    y = round(y*10 / len(Xarreglo))
+    x = round(x*20 / len(Xarreglo))
+    y = round(y*20 / len(Xarreglo))
     # Enviar para corroborar
     sendtoPC(x,y,0,0)
 
