@@ -41,7 +41,7 @@ MMA8452Q accel;
 //  accelerometer.
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(19200);
   //Serial.println("MMA8452Q Test Code!");
                         // the pc via USB
   // Choose your adventure! There are a few options when it comes
@@ -66,12 +66,17 @@ void setup()
 
 }
 char buffer;
+String reading = "";
 // The loop function will simply check for new data from the
 //  accelerometer and print it out if it's available.
 void loop()
 {
   // Use the accel.available() function to wait for new data
   //  from the accelerometer.
+  while(Serial.available())
+  {
+    reading = Serial.readString();  
+  }
   if (accel.available())
   {
     // First, use accel.read() to read the new variables:
@@ -91,7 +96,7 @@ void loop()
     // The library also supports the portrait/landscape detection
     //  of the MMA8452Q. Check out this function declaration for
     //  an example of how to use that.
-    delay(200);
+    delay(20);
   }
 }
 
@@ -101,11 +106,11 @@ void loop()
 //  function!
 void printAccels()
 {
-  Serial.print(accel.x, 3);
+  Serial.print(accel.x, 1);
   Serial.print(",");
-  Serial.print(accel.y, 3);
+  Serial.print(accel.y, 1);
   Serial.print(",");
-  Serial.print(accel.z, 3);
+  Serial.print(accel.z, 1);
   Serial.print(",");
   Serial.println();
   
@@ -117,11 +122,11 @@ void printAccels()
 //  function!
 void printCalculatedAccels()
 { 
-    Serial.print(accel.cx, 3);
+    Serial.print(accel.cx, 2);
   Serial.print(",");
-  Serial.print(accel.cy, 3);
+  Serial.print(accel.cy, 2);
   Serial.print(",");
-  Serial.print(accel.cz, 3);
+  Serial.print(0);
   Serial.print(",");
   Serial.println("");
 }
