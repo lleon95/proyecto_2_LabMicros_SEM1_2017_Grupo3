@@ -93,10 +93,10 @@ def analisis():
         # Analisis para y
         if (Yarreglo[j]>minThreshold):
             dy = (Yarreglo[j] - minThreshold)/maxThreshold
-            y += dx*10
+            y += dy*10
         elif (Yarreglo[j]<-minThreshold):
             dy = (Yarreglo[j] + minThreshold)/maxThreshold
-            y += dx*10
+            y += dy*10
         else:
             y += 0
 
