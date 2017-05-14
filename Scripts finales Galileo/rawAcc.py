@@ -21,6 +21,7 @@ y_acc = 0
 while True:
     # Recibir el dato
     msg = BT.readline()
+	BT.write('1\n')
     # Desempaquetar el mensaje
     print msg
     msg = msg.split(',')
