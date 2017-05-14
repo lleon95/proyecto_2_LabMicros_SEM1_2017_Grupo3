@@ -34,7 +34,7 @@ while True:
             # Valor final - x
             if x_acc > 0.5:
                 x_acc = (x_acc - 0.5)/0.5   # Cantidad de desplazamiento
-                x = round(x_acc * 10              # Maximo de desplazamiento
+                x = round(x_acc * 10)              # Maximo de desplazamiento
             elif x_acc < -0.5:
                 x_acc = (x_acc + 0.5)/0.5   # Cantidad de desplazamiento
                 x = round(x_acc * 10)              # Maximo de desplazamiento
@@ -43,10 +43,10 @@ while True:
             # Valor final - y
             if y_acc > 0.5:
                 y_acc = (y_acc - 0.5)/0.5   # Cantidad de desplazamiento
-                y = round(y_acc * 10              # Maximo de desplazamiento
+                y = round(y_acc * 10)              # Maximo de desplazamiento
             elif y_acc < -0.5:
                 y_acc = (y_acc + 0.5)/0.5   # Cantidad de desplazamiento
-                y = round(y_acc * 10              # Maximo de desplazamiento
+                y = round(y_acc * 10)              # Maximo de desplazamiento
             else:
                 y = 0
             # Enviar los datos al serial
