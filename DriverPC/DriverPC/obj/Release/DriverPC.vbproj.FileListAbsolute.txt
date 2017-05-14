@@ -6,3 +6,4 @@ c:\users\lleon\onedrive\documentos\visual studio 2015\Projects\DriverPC\DriverPC
 c:\users\lleon\onedrive\documentos\visual studio 2015\Projects\DriverPC\DriverPC\obj\Release\DriverPC.exe
 c:\users\lleon\onedrive\documentos\visual studio 2015\Projects\DriverPC\DriverPC\obj\Release\DriverPC.xml
 c:\users\lleon\onedrive\documentos\visual studio 2015\Projects\DriverPC\DriverPC\obj\Release\DriverPC.pdb
+c:\users\lleon\onedrive\documentos\visual studio 2015\Projects\DriverPC\DriverPC\obj\Release\DriverPC.vbprojResolveAssemblyReference.cache

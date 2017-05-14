@@ -5,6 +5,12 @@ Module main
     ' Librerias para el cursor
     Declare Function GetCursorPos Lib "user32" (ByRef lpPoint As POINTAPI) As Boolean
     Declare Function SetCursorPos Lib "user32" (ByVal x As Long, ByVal y As Long) As Long
+    Declare Auto Sub mouse_event Lib "user32" (ByVal dwFlags As Int32, ByVal dx As Int32, ByVal dy As Int32, ByVal cButtons As Int32, ByVal dwExtraInfo As IntPtr)
+    Const MOUSEEVENTF_LEFTDOWN As Int32 = &H2 '  left button down
+    Const MOUSEEVENTF_LEFTUP As Int32 = &H4 '  left button up
+    Const MOUSEEVENTF_RIGHTDOWN As Int32 = &H8 '  right button down
+    Const MOUSEEVENTF_RIGHTUP As Int32 = &H10 '  right button up
+
     Public Structure POINTAPI
         Dim X_Pos As Integer
         Dim Y_Pos As Integer
@@ -18,9 +24,14 @@ Module main
     Dim message As String
     Dim nport As Integer
 
+    Dim LB As Boolean
+    Dim RB As Boolean
+
     Sub Main()
         ' Vincular el cerrado de la APP:
         AddHandler AppDomain.CurrentDomain.ProcessExit, AddressOf main_ProcessExit
+        LB = False
+        RB = False
         ' Pantalla de bienvenida
         Console.WriteLine("----------------------------------------")
         Console.WriteLine("Bienvenido al configurador del MouseFlex")
@@ -119,15 +130,37 @@ Module main
     End Sub
 
     ' Descomposicion del mensaje
+
     Sub descompose(reading As String)
         Dim elements() As String = reading.Split(",")
         ' Estructura: x, y, lb, rb
         Dim x As Integer = CInt(elements(0))
         Dim y As Integer = CInt(elements(1))
+        Dim clic As Integer = CInt(elements(2))
 
         If Not x = 0 Or Not y = 0 Then
             SetCursor(x, y)
         End If
+
+        If clic > 0 Then
+            If clic = 1 And LB = False Then
+                mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+                LB = True
+            ElseIf clic = 2 And RB = False Then
+                mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
+                RB = True
+            ElseIf clic = 0 Then
+                If RB = True Then
+                    mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0)
+                    RB = False
+                ElseIf LB = True Then
+                    mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
+                    LB = False
+                End If
+
+            End If
+        End If
+
     End Sub
 
     ' Movimiento del cursor
