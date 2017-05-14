@@ -4,3 +4,10 @@ Usado: https://sourceforge.net/p/galileodebian/wiki/DebianOnGalileo/
 
 Librerias: scipy, pyserial, mraa, time
 https://github.com/intel-iot-devkit/mraa
+
+
+Installing linux
+https://software.intel.com/en-us/get-started-galileo-linux-step1
+
+Solving internet connection:
+https://software.intel.com/en-us/node/519952
