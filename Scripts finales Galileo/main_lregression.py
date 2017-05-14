@@ -4,8 +4,8 @@ import numpy as np
 import time
 
 # Configurar el puerto serial
-USB = serial.Serial('/dev/tnt1', 115200)
-BT = serial.Serial('/dev/ttyACM0', 9600)
+USB = serial.Serial('/dev/ttyGS0', 9600)
+BT = serial.Serial('/dev/ttyS0', 9600)
 
 # Constantes
 nData = 10                         # Cantidad de datos para muestreo  <----- SE PUEDE MODIFICAR
