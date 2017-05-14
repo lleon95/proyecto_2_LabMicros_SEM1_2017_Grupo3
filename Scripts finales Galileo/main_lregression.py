@@ -126,7 +126,7 @@ while True:
     #----------------------------------------------------------------------------------------
     # Estado de WAIT
     msg = BT.readline()               # El readline() espera hasta que llegue un dato
-    #BT.write('1\n')
+    BT.write('1\n')
     #----------------------------------------------------------------------------------------
     # Estado de APPEND
     agregar(msg)                         # Invocar la subrutina append
