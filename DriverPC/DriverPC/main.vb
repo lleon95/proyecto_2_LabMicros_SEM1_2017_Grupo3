@@ -54,7 +54,7 @@ Module main
         nport = CInt(msg)
         msg = ports.Item(nport)
         Galileo.PortName = msg
-        Galileo.BaudRate = 9600
+        Galileo.BaudRate = 19200
         ' Abrir el puerto
         _continue = True
         OpenSerialPort(msg)
@@ -116,12 +116,17 @@ Module main
     End Sub
 
     ' Tarea de lectura en segundo plano
+    Dim startAttemps As Integer = 0
     Sub Read()
         While _continue
             Try
                 If Galileo.IsOpen Then
                     Dim message As String = Galileo.ReadLine()
-                    descompose(message)
+                    If startAttemps > 3 Then
+                        descompose(message)
+                    Else
+                        startAttemps = startAttemps + 1
+                    End If
                     'Console.WriteLine(message)
                 End If
             Catch generatedExceptionName As TimeoutException

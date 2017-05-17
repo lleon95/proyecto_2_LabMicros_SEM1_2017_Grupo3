@@ -69,35 +69,34 @@ char buffer;
 String reading = "";
 // The loop function will simply check for new data from the
 //  accelerometer and print it out if it's available.
+bool read = false;
+float temp;
 void loop()
 {
+  
   // Use the accel.available() function to wait for new data
   //  from the accelerometer.
-  while(Serial.available())
-  {
-    reading = Serial.readString();  
-  }
   if (accel.available())
   {
     // First, use accel.read() to read the new variables:
     accel.read();
-    
-    // accel.read() will update two sets of variables. 
-    // * int's x, y, and z will store the signed 12-bit values 
-    //   read out of the accelerometer.
-    // * floats cx, cy, and cz will store the calculated 
-    //   acceleration from those 12-bit values. These variables 
-    //   are in units of g's.
-    // Check the two function declarations below for an example
-    // of how to use these variables.
-    printCalculatedAccels();
-    //printAccels(); // Uncomment to print digital readings
-    
-    // The library also supports the portrait/landscape detection
-    //  of the MMA8452Q. Check out this function declaration for
-    //  an example of how to use that.
-    delay(20);
+
+    if(read == false && millis() % 20 == 0)
+    {
+      printCalculatedAccels();
+      read = true;
+    }
+    else
+      {
+        temp = accel.cz;
+        temp = accel.cx;
+        temp = accel.cy;
+        read = false;  
+      }
+     
   }
+  
+  //delay(20);
 }
 
 // The function demonstrates how to use the accel.x, accel.y and
@@ -106,11 +105,11 @@ void loop()
 //  function!
 void printAccels()
 {
-  Serial.print(accel.x, 1);
+  Serial.print(accel.x, 2);
   Serial.print(",");
-  Serial.print(accel.y, 1);
+  Serial.print(accel.y, 2);
   Serial.print(",");
-  Serial.print(accel.z, 1);
+  Serial.print(accel.z, 2);
   Serial.print(",");
   Serial.println();
   
@@ -122,13 +121,13 @@ void printAccels()
 //  function!
 void printCalculatedAccels()
 { 
-    Serial.print(accel.cx, 2);
+    Serial.print(accel.cx, 1);
   Serial.print(",");
-  Serial.print(accel.cy, 2);
+  Serial.print(accel.cy, 1);
+  temp = accel.cz;
   Serial.print(",");
   Serial.print(0);
-  Serial.print(",");
-  Serial.println("");
+  Serial.println(",");
 }
 
 // This function demonstrates how to use the accel.readPL()
