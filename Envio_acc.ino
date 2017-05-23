@@ -30,13 +30,14 @@ Distributed as-is; no warranty is given.
 ******************************************************************************/
 #include <Wire.h> // Must include Wire library for I2C
 #include <SFE_MMA8452Q.h> // Includes the SFE_MMA8452Q library
-#include <SoftwareSerial.h>
-int rx_pin = 0;     // setting digital pin 6 to be the receiving pin
-int tx_pin = 1; 
-SoftwareSerial Bt(rx_pin,tx_pin);
+
 //entrada analogica del flex
-int sensorPin = A5;
-int sensorValue = 0;
+//int sensorPin = A0;
+int Button1_pin= 7;
+int Button2_pin= 8;
+
+int Button1;
+int Button2;
 
 // Begin using the library by creating an instance of the MMA8452Q
 //  class. We'll call it "accel". That's what we'll reference from
@@ -67,16 +68,15 @@ void setup()
   //     ODR_6, or ODR_1. 
   //     Sets to 800, 400, 200, 100, 50, 12.5, 6.25, or 1.56 Hz.
   //accel.init(SCALE_8G, ODR_6);
-  
- pinMode(rx_pin, INPUT);  // receiving pin as INPUT
- pinMode(tx_pin, OUTPUT); // transmitting pin as OUTPUT
-
- bluetoothInitiate(); // this function will initiate our bluetooth (next section)
-
+ 
+pinMode (Button1_pin,INPUT);
+pinMode (Button2_pin,INPUT);
 }
 char buffer;
 // The loop function will simply check for new data from the
 //  accelerometer and print it out if it's available.
+
+
 void loop()
 {
   // Use the accel.available() function to wait for new data
@@ -102,31 +102,28 @@ void loop()
     //  an example of how to use that.
     //printOrientation();
     
-    sensorValue = analogRead(sensorPin);
+    Button1 = digitalRead(Button1_pin);
+    Button2 = digitalRead(Button2_pin);
     //sensorValue = sensorValue * (5/1024);
     Serial.print(",");
-    Serial.print(sensorValue);
+    if (Button1 == Button2){
+      Serial.print('0');
+    }
+    else{
+      if(Button1 == HIGH){
+        Serial.print('1');
+      }
+      else{
+        Serial.print('2'); 
+      }
+    }
+    /*Serial.print(Button1);
     Serial.print(",");
-    buffer = Serial.read(); // get what the terminal sent
-    Bt.print(buffer);
-    delay(10);
-    Serial.println(); // Print new line every time.
+    Serial.print(Button2);*/
+    Serial.println(",");
   }
 }
 
-// The function demonstrates how to use the accel.x, accel.y and
-//  accel.z variables.
-// Before using these variables you must call the accel.read()
-//  function!
-void printAccels()
-{
-  Serial.print(accel.x, 3);
-  Serial.print(",");
-  Serial.print(accel.y, 3);
-  Serial.print(",");
-  Serial.print(accel.z, 3);
-  Serial.print(",");
-}
 
 // This function demonstrates how to use the accel.cx, accel.cy,
 //  and accel.cz variables.
@@ -146,43 +143,4 @@ void printCalculatedAccels()
 // This function demonstrates how to use the accel.readPL()
 // function, which reads the portrait/landscape status of the
 // sensor.
-void printOrientation()
-{
-  // accel.readPL() will return a byte containing information
-  // about the orientation of the sensor. It will be either
-  // PORTRAIT_U, PORTRAIT_D, LANDSCAPE_R, LANDSCAPE_L, or
-  // LOCKOUT.
-  byte pl = accel.readPL();
-  switch (pl)
-  {
-  case PORTRAIT_U:
-    Serial.print("Portrait Up");
-    break;
-  case PORTRAIT_D:
-    Serial.print("Portrait Down");
-    break;
-  case LANDSCAPE_R:
-    Serial.print("Landscape Right");
-    break;
-  case LANDSCAPE_L:
-    Serial.print("Landscape Left");
-    break;
-  case LOCKOUT:
-    Serial.print("Flat");
-    break;
-  }
-}
 
-void bluetoothInitiate(){
- // this part is copied from the Seeeduino example*
- Bt.begin(9600); // this sets the the module to run at the default bound rate
- Bt.print("\r\n+STWMOD = 0\r\n");        //set the bluetooth work in slave mode
- Bt.print("\r\n+STNA=SeeedBTSlave\r\n"); //set the bluetooth name as "SeeedBTSlave"
- Bt.print("\r\n+STOAUT=1\r\n");          // Permit Paired device to connect me
- Bt.print("\r\n+STAUTO=0\r\n");          // Auto-connection should be forbidden here
- delay(2000);                            // This delay is required.
- Bt.print("\r\n+INQ=1\r\n");             //make the slave bluetooth inquirable
- delay(2000);                            // This delay is required.
- Bt.flush(); 
- Bt.print("Bluetooth connection established correctly!"); // if connection is successful then print to the master device
- }
