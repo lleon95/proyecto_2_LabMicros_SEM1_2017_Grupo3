@@ -1,0 +1,10 @@
+c:\users\lleon\onedrive\documentos\visual studio 2015\Projects\DriverPC\DriverPC\bin\Release\DriverPC.exe
+c:\users\lleon\onedrive\documentos\visual studio 2015\Projects\DriverPC\DriverPC\bin\Release\DriverPC.pdb
+c:\users\lleon\onedrive\documentos\visual studio 2015\Projects\DriverPC\DriverPC\bin\Release\DriverPC.xml
+c:\users\lleon\onedrive\documentos\visual studio 2015\Projects\DriverPC\DriverPC\obj\Release\DriverPC.Resources.resources
+c:\users\lleon\onedrive\documentos\visual studio 2015\Projects\DriverPC\DriverPC\obj\Release\DriverPC.vbproj.GenerateResource.Cache
+c:\users\lleon\onedrive\documentos\visual studio 2015\Projects\DriverPC\DriverPC\obj\Release\DriverPC.exe
+c:\users\lleon\onedrive\documentos\visual studio 2015\Projects\DriverPC\DriverPC\obj\Release\DriverPC.xml
+c:\users\lleon\onedrive\documentos\visual studio 2015\Projects\DriverPC\DriverPC\obj\Release\DriverPC.pdb
+c:\users\lleon\onedrive\documentos\visual studio 2015\Projects\DriverPC\DriverPC\obj\Release\DriverPC.vbprojResolveAssemblyReference.cache
+C:\Users\lleon\OneDrive\Documentos\Visual Studio 2015\Projects\DriverPC\DriverPC\bin\Release\DriverPC.exe.config
