@@ -33,8 +33,7 @@ def agregar(msg):
         if float(msg[0]) < 10 and float(msg[1]) < 10 and float(msg[2]) < 10:
             X_raw_arreglo.append(float(msg[0]))
             Y_raw_arreglo.append(float(msg[1]))
-            #Farreglo.append(float(msg[3]))
-            F_raw_arreglo.append(0)
+            F_raw_arreglo.append(float(msg[2]))
     except:
         print "Dato invalido recibido"
 
@@ -65,7 +64,7 @@ def sendtoPC(x_out,y_out,LB_out,RB_out):
     # LB: Left Button: 0: soltar, 1: presionar
     # RB: Right Button: 0: soltar, 1: presionar
     # Para enviar al PC
-    USB.write(str(x_out)+','+str(y_out)+','+str(LB_out)+','+str(RB_out)+','+',\n')
+    USB.write(str(x_out)+','+str(y_out)+','+str(LB_out)+',\n')
     return
 
 def analisis():
@@ -99,10 +98,10 @@ def analisis():
             y += 0
 
     # Corregir X y Y
-    x = round(x*20 / len(Xarreglo))
-    y = round(y*20 / len(Xarreglo))
+    x = round(x*10 / len(Xarreglo))
+    y = round(y*10 / len(Xarreglo))
     # Enviar para corroborar
-    sendtoPC(x,y,0,0)
+    sendtoPC(x,y,F_arreglo_raw[0],0)
 
     return
 
@@ -124,7 +123,6 @@ while True:
     #----------------------------------------------------------------------------------------
     # Estado de WAIT
     msg = BT.readline()               # El readline() espera hasta que llegue un dato
-    BT.write('1\n')
     #----------------------------------------------------------------------------------------
     # Estado de APPEND
     agregar(msg)                         # Invocar la subrutina append
